@@ -4,17 +4,17 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import com.zproject.managment.model.User;
 import com.zproject.managment.model.UserProject;
 
 public interface UserProjectRepository extends JpaRepository<UserProject, Long>{
+	
+	Optional<UserProject> findByUser(User user);
 
-	Optional<UserProject> findById(Long id);
-	
-	Optional<UserProject> findByUser(Long user_id);
-	
-	List<UserProject> findByProject(Long project_id);
-	
-	List<UserProject> findAll();
+	@Query("SELECT up FROM UserProject up WHERE up.project.id = :project_id")
+	List<UserProject> findByProject(@Param("project_id") long project_id);
 	
 }
