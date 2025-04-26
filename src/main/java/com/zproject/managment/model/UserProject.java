@@ -17,29 +17,26 @@ import lombok.Setter;
 
 @Data
 @Entity
-@Table(name = "workpackages")
+@Table(name = "user_project")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Workpackage {
-
-	@Id
+public class UserProject {
+ 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "workpackage_id")
+    @Column(name = "user_project_id")
     private Long id;
 
  	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+ 	private User user_id;
+ 	
+ 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "project_id", nullable = false)
-	private Integer project_id;
-	
-	private String name;
-	
-	private String description;
-	
-	private Integer hours;
-	
-	private String start_dt;
-	
-	private String end_dt;	
+ 	private Project project_id;
+ 	
+ 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "profile_id", nullable = false)
+ 	private Profile profile_id;
 }
