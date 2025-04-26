@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zproject.managment.exception.ResourceNotFoundException;
+import com.zproject.managment.model.Profile;
 import com.zproject.managment.model.Project;
 import com.zproject.managment.model.User;
 import com.zproject.managment.model.UserProject;
@@ -48,10 +49,10 @@ public class UserProjectServiceImpl implements UserProjectService {
 
     @Override
     public List<User> getUsersByProfile(Long profileId) {
-        profileRepository.findById(profileId)
+        Profile profile = profileRepository.findById(profileId)
                 .orElseThrow(() -> new ResourceNotFoundException("Profile with id = " + profileId + " not found"));
         
-        List<UserProject> userProjects = userProjectRepository.findByProfile(profileId);
+        List<UserProject> userProjects = userProjectRepository.findByProfile(profile);
         
         List<User> userList = new ArrayList<User>();
         
@@ -67,10 +68,10 @@ public class UserProjectServiceImpl implements UserProjectService {
 
     @Override
     public List<User> getUsersByProject(Long projectId) {
-    	projectRepository.findById(projectId)
+    	Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new ResourceNotFoundException("Project with id = " + projectId + " not found"));
     	
-    	List<UserProject> userProjects = userProjectRepository.findByProject(projectId);
+    	List<UserProject> userProjects = userProjectRepository.findByProject(project);
 
         List<User> users = new ArrayList<>();
         for (UserProject userProject : userProjects) {
@@ -85,10 +86,10 @@ public class UserProjectServiceImpl implements UserProjectService {
 
     @Override
     public List<Project> getProjectsByUser(Long userId) {
-    	userRepository.findById(userId)
+    	User user = userRepository.findById(userId)
         .orElseThrow(() -> new ResourceNotFoundException("User with id = " + userId + " not found"));
     	
-    	List<UserProject> userProjects = userProjectRepository.findByUser(userId);
+    	List<UserProject> userProjects = userProjectRepository.findByUser(user);
 
         List<Project> projects = new ArrayList<>();
         for (UserProject userProject : userProjects) {
