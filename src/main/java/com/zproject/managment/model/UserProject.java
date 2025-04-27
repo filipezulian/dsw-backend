@@ -1,5 +1,7 @@
 package com.zproject.managment.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -22,13 +24,16 @@ public class UserProject {
 
  	@ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
+ 	@JsonBackReference
  	private User user;
  	
  	@ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "project_id", nullable = false)
+ 	@JsonBackReference
  	private Project project;
  	
  	@ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "profile_id", nullable = false)
+ 	@JsonBackReference
  	private Profile profile;
 }

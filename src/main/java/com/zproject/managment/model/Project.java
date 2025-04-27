@@ -1,7 +1,10 @@
 package com.zproject.managment.model;
 
+
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -42,9 +45,11 @@ public class Project {
 	
 	private Integer total_time;
 	
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<UserProject> users = new ArrayList<UserProject>();
-    
+
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Workpackage> workpackages = new ArrayList<Workpackage>();
 }

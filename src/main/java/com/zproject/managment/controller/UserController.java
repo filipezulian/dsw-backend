@@ -1,6 +1,8 @@
 package com.zproject.managment.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zproject.managment.exception.ErrorAuth;
 import com.zproject.managment.model.Credential;
 import com.zproject.managment.model.User;
+import com.zproject.managment.security.JwtService;
 import com.zproject.managment.services.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
 	private final UserService userService;
+    private final JwtService jwtService;
 	
 	@PostMapping("/create")
     public ResponseEntity<Long> createUser(@RequestBody User user) {
@@ -34,13 +37,15 @@ public class UserController {
     }
 	
 	@PostMapping("/auth")
-    public ResponseEntity<User> auth(@RequestBody Credential credential) {
-        try {
-            User authUser = userService.auth(credential);
-            return ResponseEntity.ok(authUser);
-        } catch (ErrorAuth e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+    public ResponseEntity<Map<String, String>> auth(@RequestBody Credential credential) {
+		User authUser = userService.auth(credential);
+
+        String jwtToken = jwtService.generateToken(authUser.getEmail());
+
+        Map<String, String> response = new HashMap<String, String>();
+        response.put("token", jwtToken);
+
+        return ResponseEntity.ok(response);
     }
 	
 	@GetMapping("/id/{id}")

@@ -8,4 +8,6 @@ public interface ProfileService {
 
 	List<Profile> getAll();
 	
+	boolean createAll();
+	
 }

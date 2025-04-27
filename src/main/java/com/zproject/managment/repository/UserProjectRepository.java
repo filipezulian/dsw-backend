@@ -1,11 +1,8 @@
 package com.zproject.managment.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import com.zproject.managment.model.Profile;
 import com.zproject.managment.model.Project;
