@@ -7,5 +7,5 @@ import com.zproject.managment.model.Status;
 public interface StatusService {
 
 	List<Status> getAll();
-	
+	boolean createAll();
 }

@@ -20,4 +20,24 @@ public class StatusServiceImpl implements StatusService {
 		return statusRepository.findAll();
 	}
 
+	@Override
+	public boolean createAll() {
+		List<Status> existingStatuses = statusRepository.findAll();
+	
+	    if (existingStatuses.isEmpty()) {
+	        Status active = new Status();
+	        active.setName("Active");
+	
+	        Status onHold = new Status();
+	        onHold.setName("On Hold");
+	
+	        Status completed = new Status();
+	        completed.setName("Completed");
+	
+	        statusRepository.saveAll(List.of(active, onHold, completed));
+	        return true;
+	    }
+	    return false;
+	}
+
 }

@@ -3,6 +3,7 @@ package com.zproject.managment.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zproject.managment.dto.UserDTO;
 import com.zproject.managment.model.Credential;
 import com.zproject.managment.model.User;
 import com.zproject.managment.security.JwtService;
@@ -55,8 +57,11 @@ public class UserController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.getAll();
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<UserDTO> users = userService.getAll()
+	            .stream()
+	            .map(user -> new UserDTO(user.getId(), user.getName(), user.getEmail(), user.getProfile()))
+	            .collect(Collectors.toList());
         return ResponseEntity.ok(users);
     }
 
@@ -66,7 +71,7 @@ public class UserController {
         return ResponseEntity.ok(updatedUser);
     }
 
-    @DeleteMapping("/id/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.delete(id);
         return ResponseEntity.noContent().build();
