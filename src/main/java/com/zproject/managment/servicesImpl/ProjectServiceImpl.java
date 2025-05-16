@@ -1,6 +1,7 @@
 package com.zproject.managment.servicesImpl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,5 +45,11 @@ public class ProjectServiceImpl implements ProjectService{
         }
         projectRepository.deleteById(id);
     }
+
+	@Override
+	public Optional<Project> get(Long id) {
+		Optional<Project> project = projectRepository.findById(id);
+		return project;
+	}
 
 }
