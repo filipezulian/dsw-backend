@@ -41,8 +41,8 @@ public class UserController {
 	@PostMapping("/auth")
     public ResponseEntity<Map<String, String>> auth(@RequestBody Credential credential) {
 		User authUser = userService.auth(credential);
-
-        String jwtToken = jwtService.generateToken(authUser.getEmail());
+		
+        String jwtToken = jwtService.generateToken(authUser.getEmail(), authUser.getId(), authUser.getProfile().getId());
 
         Map<String, String> response = new HashMap<String, String>();
         response.put("token", jwtToken);

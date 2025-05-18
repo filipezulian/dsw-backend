@@ -42,7 +42,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 return;
             }
-        } else if (!(path.startsWith("/user/auth") || path.startsWith("/user/create") || path.startsWith("/profiles/create"))) {
+        } else if (!(path.startsWith("/user/auth") || !(path.startsWith("/user/all") || path.startsWith("/user/create") || path.startsWith("/profiles/create")))) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }

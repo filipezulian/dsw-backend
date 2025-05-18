@@ -19,18 +19,18 @@ public class JwtService {
 
     private static final long EXPIRATION_TIME = 1000 * 60 * 60;
 
-    public String generateToken(String email) {
+    public String generateToken(String email, Long user_id, Long profile) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("email", email);
+        claims.put("user_id", user_id);
+        claims.put("profile", profile);
 
         return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(email)
-                .setIssuer("ZProjectAPI")
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(SECRET_KEY)
-                .compact();
+            .setClaims(claims)
+            .setSubject(email)
+            .setIssuedAt(new Date(System.currentTimeMillis()))
+            .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+            .signWith(SECRET_KEY)
+            .compact();
     }
 
     public String extractEmail(String token) {

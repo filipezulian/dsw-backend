@@ -1,6 +1,7 @@
 package com.zproject.managment.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,6 +17,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "workpackages")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Workpackage {
 
 	@Id
@@ -25,7 +27,7 @@ public class Workpackage {
 
  	@ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "project_id", nullable = false)
- 	@JsonBackReference
+ 	@JsonBackReference(value = "project-workpackages")
 	private Project project;
 	
 	private String name;

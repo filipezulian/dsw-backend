@@ -3,6 +3,7 @@ package com.zproject.managment.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -18,6 +19,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "profiles")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Profile {
 	
 	@Id
@@ -30,8 +32,4 @@ public class Profile {
 	@OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
     private List<User> users = new ArrayList<User>();
-
-    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<UserProject> assignments = new ArrayList<UserProject>();
 }
